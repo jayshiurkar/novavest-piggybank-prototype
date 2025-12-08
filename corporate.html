@@ -5,7 +5,8 @@
   <title>PiggyBank • NovaVest (Corporate Treasury)</title>
   <style>
     * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    body { margin: 0; background: #020617; color: #e5e7eb; }
+    body { margin: 0; background: #020617; color: #e5e7eb; font-size: 16px; }
+
     header {
       background: #020617;
       border-bottom: 1px solid #1f2937;
@@ -16,34 +17,36 @@
     }
     .brand { display: flex; align-items: center; gap: 10px; }
     .logo {
-      width: 32px; height: 32px;
-      border-radius: 8px;
+      width: 40px; height: 40px;
+      border-radius: 12px;
       background: linear-gradient(135deg, #22c55e, #4ade80);
       display:flex; align-items:center; justify-content:center;
-      font-weight: 800; color: #022c22;
     }
-    header h1 { font-size: 16px; margin: 0; }
-    header p { font-size: 11px; margin: 0; color: #9ca3af; }
+    .logo svg { width: 26px; height: 26px; }
+    header h1 { font-size: 20px; margin: 0; }
+    header p { font-size: 13px; margin: 0; color: #9ca3af; }
     nav a {
-      color: #9ca3af; text-decoration: none; font-size: 13px;
+      color: #9ca3af; text-decoration: none; font-size: 14px;
       margin-left: 16px; padding-bottom: 2px;
     }
     nav a.active {
       color: #e5e7eb; border-bottom: 2px solid #22c55e; font-weight: 600;
     }
+
     .layout {
       display: grid;
       grid-template-columns: 240px 1fr;
-      min-height: calc(100vh - 56px);
+      min-height: calc(100vh - 60px);
     }
+
     aside {
       background: #020617;
       border-right: 1px solid #1f2937;
-      padding: 18px 14px;
-      font-size: 13px;
+      padding: 20px 14px;
+      font-size: 14px;
     }
     aside h3 {
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: #6b7280;
@@ -51,76 +54,112 @@
       margin-bottom: 6px;
     }
     aside a {
-      display: block;
-      padding: 7px 9px;
-      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 9px;
+      border-radius: 8px;
       color: #9ca3af;
       text-decoration: none;
       margin-bottom: 4px;
     }
+    aside a span.icon { font-size: 16px; }
     aside a.active {
       background: #0f172a;
       color: #e5e7eb;
       font-weight: 500;
     }
+
     main {
-      padding: 18px 22px 26px;
+      padding: 20px 22px 0;
       background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.16), transparent 55%),
                   radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.18), transparent 55%),
                   #020617;
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100vh - 60px);
     }
+
     .top-row {
       display: flex;
       justify-content: space-between;
       gap: 16px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
-    .sub { font-size: 12px; color: #9ca3af; }
+    .sub { font-size: 13px; color: #9ca3af; }
     .badge-company {
-      font-size: 12px;
-      padding: 4px 10px;
+      font-size: 14px;
+      padding: 5px 10px;
       border-radius: 999px;
       border: 1px solid #4b5563;
       background: #020617;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
+    .pill-status {
+      font-size: 13px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: #022c22;
+      border: 1px solid #22c55e;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #bbf7d0;
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 999px; background: #22c55e;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: 2.1fr 1.4fr;
       gap: 16px;
+      margin-bottom: 12px;
     }
+
     .card {
       background: rgba(15, 23, 42, 0.98);
-      border-radius: 14px;
+      border-radius: 16px;
       border: 1px solid rgba(51, 65, 85, 0.9);
-      padding: 14px 16px;
+      padding: 16px 18px;
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
     }
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
+    .card-title {
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title span.icon { font-size: 20px; }
+
     .metric-label {
-      font-size: 11px;
+      font-size: 12px;
       color: #9ca3af;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
     .metric-value {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 600;
     }
     .metric-sub {
-      font-size: 11px;
-      color: #6b7280;
+      font-size: 12px;
+      color: #9ca3af;
       margin-top: 2px;
     }
     .progress-bar {
       background: #020617;
       border-radius: 999px;
-      height: 8px;
+      height: 10px;
       overflow: hidden;
       border: 1px solid #1f2937;
       margin-top: 6px;
@@ -138,51 +177,40 @@
       gap: 12px;
       margin-top: 10px;
     }
-    .pill {
-      font-size: 11px;
-      border-radius: 999px;
-      padding: 4px 10px;
-      background: #022c22;
-      color: #bbf7d0;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid #22c55e;
-    }
-    .status-dot {
-      width: 7px; height: 7px; border-radius: 999px; background: #22c55e;
-    }
+
     ul.list {
       list-style: none;
       padding-left: 0;
       margin: 8px 0 0;
-      font-size: 12px;
+      font-size: 14px;
     }
-    .list li { margin-bottom: 6px; }
+    .list li { margin-bottom: 8px; }
     .list li span.move {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
+      gap: 8px;
     }
     .pill-small {
-      font-size: 10px;
+      font-size: 11px;
       border-radius: 999px;
       border: 1px solid #4b5563;
-      padding: 2px 6px;
-      margin-left: 6px;
+      padding: 2px 7px;
+      margin-left: 4px;
       color: #9ca3af;
     }
+
     button {
       border-radius: 999px;
       border: none;
-      padding: 7px 13px;
-      font-size: 12px;
+      padding: 8px 16px;
+      font-size: 14px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      margin-top: 8px;
       margin-right: 8px;
-      margin-top: 6px;
     }
     button.primary {
       background: linear-gradient(90deg, #22c55e, #4ade80);
@@ -194,30 +222,102 @@
       border: 1px solid #4b5563;
       color: #e5e7eb;
     }
-    textarea {
-      width: 100%;
-      border-radius: 10px;
-      border: 1px solid #4b5563;
-      background: #020617;
-      color: #e5e7eb;
-      font-size: 12px;
-      padding: 8px;
-      resize: vertical;
-    }
+    button .icon { font-size: 18px; }
+
     .chip {
       font-size: 11px;
       border-radius: 999px;
       border: 1px dashed #4b5563;
-      padding: 2px 7px;
+      padding: 3px 9px;
       margin-right: 6px;
       color: #9ca3af;
+    }
+
+    /* Chat-style bottom panel */
+    .chat-container {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid #111827;
+    }
+    .chat-box {
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 18px;
+      border: 1px solid #1f2937;
+      padding: 14px 16px;
+      max-height: 260px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      padding-right: 6px;
+    }
+    .msg {
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .msg.user { justify-content: flex-end; }
+    .bubble {
+      padding: 8px 12px;
+      border-radius: 14px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+    .bubble.user {
+      background: #4f46e5;
+      color: #e5e7eb;
+      border-bottom-right-radius: 4px;
+    }
+    .bubble.ai {
+      background: #111827;
+      color: #e5e7eb;
+      border-bottom-left-radius: 4px;
+    }
+    .bubble small { display:block; font-size:11px; color:#cbd5f5; margin-top:2px; }
+    .chat-input-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .chat-input-row textarea {
+      flex: 1;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 14px;
+      padding: 8px 12px;
+      resize: none;
+      height: 46px;
+    }
+
+    @media (max-width: 960px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { display: none; }
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 <header>
   <div class="brand">
-    <div class="logo">PB</div>
+    <div class="logo" aria-hidden="true">
+      <!-- piggy icon reuse -->
+      <svg viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="18" fill="#fecaca"/>
+        <circle cx="24" cy="26" r="3" fill="#111827"/>
+        <circle cx="40" cy="26" r="3" fill="#111827"/>
+        <ellipse cx="32" cy="34" rx="7" ry="5" fill="#22c55e"/>
+        <circle cx="29" cy="34" r="1.6" fill="#111827"/>
+        <circle cx="35" cy="34" r="1.6" fill="#111827"/>
+        <path d="M18 24 L16 20 L20 22 Z" fill="#fecaca"/>
+        <path d="M46 24 L48 20 L44 22 Z" fill="#fecaca"/>
+      </svg>
+    </div>
     <div>
       <h1>PiggyBank • Corporate</h1>
       <p>NovaVest Embedded • Treasury Intelligence</p>
@@ -235,27 +335,29 @@
 <div class="layout">
   <aside>
     <h3>Overview</h3>
-    <a href="#" class="active">Dashboard</a>
-    <a href="#">Accounts</a>
-    <a href="#">Cash Forecast</a>
+    <a href="#" class="active"><span class="icon">📊</span>Dashboard</a>
+    <a href="#"><span class="icon">🏦</span>Accounts</a>
+    <a href="#"><span class="icon">📈</span>Cash forecast</a>
 
     <h3>NovaVest Agent</h3>
-    <a href="#">Policy Engine</a>
-    <a href="#">Sweep Activity</a>
-    <a href="#">Stress Tests</a>
-    <a href="#">Audit Trail</a>
+    <a href="#"><span class="icon">⚙️</span>Policy engine</a>
+    <a href="#"><span class="icon">💸</span>Sweep activity</a>
+    <a href="#"><span class="icon">🌪️</span>Stress tests</a>
+    <a href="#"><span class="icon">📜</span>Audit trail</a>
   </aside>
 
   <main>
     <div class="top-row">
       <div>
         <div class="badge-company" id="companyName">Contoso Manufacturing Inc.</div>
-        <div class="sub" id="companyMeta">Mid-market • Revenue $450M • Policy: 3 months OPEX in cash-equivalents</div>
+        <div class="sub" id="companyMeta">
+          Mid-market • Revenue $450M • Policy: 3 months OPEX in cash-equivalents
+        </div>
       </div>
       <div style="text-align:right;">
-        <div class="pill">
+        <div class="pill-status">
           <span class="status-dot"></span>
-          NovaVest Treasury Agent: ACTIVE
+          NovaVest treasury agent: ACTIVE
         </div>
         <div class="sub" id="policyStatus" style="margin-top:6px;">
           All policies within limits
@@ -264,14 +366,17 @@
     </div>
 
     <div class="grid">
-
-      <!-- Left: Cash & sweeps -->
-      <section class="card">
+      <!-- Left: cash & sweeps -->
+      <section class="card" aria-label="Cash and sweeps">
         <div class="card-header">
+          <div class="card-title"><span class="icon">💼</span>Cash & liquidity</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px;">
           <div>
             <div class="metric-label">Total cash across PiggyBank</div>
             <div class="metric-value" id="totalCash">$0</div>
-            <div class="metric-sub" id="cashBreakdown">Loading...</div>
+            <div class="metric-sub" id="cashBreakdown">Loading…</div>
           </div>
           <div style="text-align:right;">
             <div class="metric-label">Liquidity buffer vs policy</div>
@@ -286,7 +391,7 @@
           <div>
             <div class="metric-label">Operating accounts</div>
             <div class="metric-value" id="operatingCash">$0</div>
-            <div class="metric-sub" id="operatingInfo">Loading...</div>
+            <div class="metric-sub" id="operatingInfo">Loading…</div>
           </div>
           <div>
             <div class="metric-label">Policy-eligible surplus</div>
@@ -300,24 +405,21 @@
           </div>
         </div>
 
-        <h3 style="margin-top:14px; font-size:14px;">Tonight’s proposed sweeps</h3>
+        <h3 style="margin-top:14px; font-size:16px;">Tonight’s proposed sweeps</h3>
         <ul class="list" id="sweepsList"></ul>
 
-        <button class="primary" id="btnApproveSweeps">Approve all sweeps</button>
-        <button class="secondary" id="btnRandomizeSweeps">Refresh proposal</button>
+        <button class="primary" id="btnApproveSweeps">
+          <span class="icon">⚡</span>Invest now (approve sweeps)
+        </button>
+        <button class="secondary" id="btnRandomizeSweeps">
+          <span class="icon">🔁</span>Refresh proposal
+        </button>
       </section>
 
-      <!-- Right: risk + scenarios -->
-      <section class="card">
+      <!-- Right: risk snapshot -->
+      <section class="card" aria-label="Risk snapshot">
         <div class="card-header">
-          <div>
-            <div class="metric-label">Risk snapshot</div>
-            <div style="font-size:14px;">Stress &amp; scenarios</div>
-          </div>
-          <span class="pill">
-            <span class="status-dot"></span>
-            Stable • Within limits
-          </span>
+          <div class="card-title"><span class="icon">🛡️</span>Risk snapshot</div>
         </div>
 
         <div class="three">
@@ -339,29 +441,36 @@
         </div>
 
         <div style="margin-top:10px;">
-          <span class="chip">Revenue -30% scenario</span>
+          <span class="chip">Revenue −30% scenario</span>
           <span class="chip">FX shock</span>
           <span class="chip">2008-style stress</span>
         </div>
+      </section>
+    </div>
 
-        <textarea id="scenarioInput" rows="4" placeholder="e.g. 'Simulate 30% revenue drop for 2 quarters and show liquidity coverage.'"></textarea>
-        <button class="primary" id="btnRunScenario">Run scenario</button>
-        <button class="secondary" id="btnDemoScenario">Insert demo scenario</button>
-
-        <div style="margin-top:10px;">
-          <div class="metric-label">Scenario result (AI explanation)</div>
-          <div id="scenarioResult" class="metric-sub" style="margin-top:4px; min-height:40px;">
-            Run a scenario to see how NovaVest summarizes risk and liquidity coverage.
+    <!-- Bottom chat panel -->
+    <section class="chat-container" aria-label="Scenario chat with NovaVest">
+      <div class="chat-box">
+        <div class="metric-label" style="margin-bottom:6px;">Ask NovaVest about scenarios</div>
+        <div class="chat-messages" id="scenarioMessages">
+          <div class="msg ai">
+            <div class="bubble ai">
+              I monitor your cash, policies, and market data. Ask me to stress test something or check if a sweep is safe.
+              <small>Example: “What if revenue drops 30% for 2 quarters?”</small>
+            </div>
           </div>
         </div>
-      </section>
-
-    </div>
+        <div class="chat-input-row">
+          <textarea id="scenarioInput" placeholder="Describe a scenario you care about…"></textarea>
+          <button class="primary" id="btnRunScenario"><span class="icon">➡️</span>Run</button>
+        </div>
+      </div>
+    </section>
   </main>
 </div>
 
 <script>
-  // --- Dummy "database" for corporate view ---
+  // --- Dummy corporate DB ---
   const corpDb = {
     company: {
       name: "Contoso Manufacturing Inc.",
@@ -427,6 +536,8 @@
     }
   };
 
+  let currentSweepsIndex = 0;
+
   function renderCompany() {
     const c = corpDb.company;
     document.getElementById("companyName").textContent = c.name;
@@ -442,13 +553,11 @@
     document.getElementById("operatingInfo").textContent =
       `Next 30-day obligations: $${c.next30dObligations.toLocaleString()}`;
     document.getElementById("invested").textContent = "$" + c.invested.toLocaleString();
-    document.getElementById("surplus").textContent = "$" + (c.total - c.next30dObligations - c.invested).toLocaleString();
-
+    const surplus = c.total - c.next30dObligations - c.invested;
+    document.getElementById("surplus").textContent = "$" + surplus.toLocaleString();
     document.getElementById("bufferFill").style.width = c.bufferPct + "%";
     document.getElementById("bufferText").textContent = `${c.bufferPct}% of required buffer secured`;
   }
-
-  let currentSweepsIndex = 0;
 
   function renderSweeps() {
     const list = document.getElementById("sweepsList");
@@ -480,22 +589,30 @@
     document.getElementById("breaches").textContent = r.breaches30d;
   }
 
-  function runScenario() {
-    const input = document.getElementById("scenarioInput").value.trim();
-    const out = document.getElementById("scenarioResult");
-    if (!input) {
-      out.textContent = "Type a stress scenario first. Example: 'Revenue -30% for 2 quarters'.";
-      return;
-    }
-    out.textContent =
-      "NovaVest would simulate the cash impact, re-apply your 3-month OPEX policy, and propose a mix of " +
-      "de-risking (more T-bills/MMFs) and controlled drawdowns from surplus buckets. " +
-      "For this prototype, assume coverage stays above 1.2x even under this scenario.";
+  // Chat-style scenario interface
+  function addScenarioMessage(text, from = "ai") {
+    const container = document.getElementById("scenarioMessages");
+    const msg = document.createElement("div");
+    msg.className = "msg " + from;
+    const bubble = document.createElement("div");
+    bubble.className = "bubble " + from;
+    bubble.textContent = text;
+    msg.appendChild(bubble);
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
   }
 
-  function insertDemoScenario() {
-    document.getElementById("scenarioInput").value =
-      "Simulate a 30% revenue drop for 2 quarters and show if our 3-month liquidity buffer holds.";
+  function runScenario() {
+    const input = document.getElementById("scenarioInput");
+    const txt = input.value.trim();
+    if (!txt) return;
+    addScenarioMessage(txt, "user");
+    input.value = "";
+    const reply =
+      "For that scenario I would recompute cash inflows, re-run your 3-month OPEX policy, " +
+      "and show how much buffer remains. If coverage dropped below your threshold, I’d suggest " +
+      "reducing sweeps, shortening duration, and temporarily increasing cash in operating accounts.";
+    setTimeout(() => addScenarioMessage(reply, "ai"), 400);
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -506,10 +623,16 @@
 
     document.getElementById("btnRandomizeSweeps").addEventListener("click", nextSweepsTemplate);
     document.getElementById("btnApproveSweeps").addEventListener("click", () => {
-      alert("In a real deployment, PiggyBank would execute these sweeps. In this prototype, it's just a confirmation.");
+      alert("In production, PiggyBank would execute tonight’s NovaVest sweeps. Here it’s just a demo.");
     });
+
     document.getElementById("btnRunScenario").addEventListener("click", runScenario);
-    document.getElementById("btnDemoScenario").addEventListener("click", insertDemoScenario);
+    document.getElementById("scenarioInput").addEventListener("keydown", e => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        runScenario();
+      }
+    });
   });
 </script>
 </body>
