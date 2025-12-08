@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PiggyBank • NovaVest (Corporate Treasury)</title>
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; background: #020617; color: #e5e7eb; }
+    header {
+      background: #020617;
+      border-bottom: 1px solid #1f2937;
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #22c55e, #4ade80);
+      display:flex; align-items:center; justify-content:center;
+      font-weight: 800; color: #022c22;
+    }
+    header h1 { font-size: 16px; margin: 0; }
+    header p { font-size: 11px; margin: 0; color: #9ca3af; }
+    nav a {
+      color: #9ca3af; text-decoration: none; font-size: 13px;
+      margin-left: 16px; padding-bottom: 2px;
+    }
+    nav a.active {
+      color: #e5e7eb; border-bottom: 2px solid #22c55e; font-weight: 600;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: calc(100vh - 56px);
+    }
+    aside {
+      background: #020617;
+      border-right: 1px solid #1f2937;
+      padding: 18px 14px;
+      font-size: 13px;
+    }
+    aside h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-top: 10px;
+      margin-bottom: 6px;
+    }
+    aside a {
+      display: block;
+      padding: 7px 9px;
+      border-radius: 6px;
+      color: #9ca3af;
+      text-decoration: none;
+      margin-bottom: 4px;
+    }
+    aside a.active {
+      background: #0f172a;
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+    main {
+      padding: 18px 22px 26px;
+      background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.16), transparent 55%),
+                  radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.18), transparent 55%),
+                  #020617;
+    }
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .sub { font-size: 12px; color: #9ca3af; }
+    .badge-company {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 2.1fr 1.4fr;
+      gap: 16px;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 14px;
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      padding: 14px 16px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .metric-label {
+      font-size: 11px;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .metric-value {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .metric-sub {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+    .progress-bar {
+      background: #020617;
+      border-radius: 999px;
+      height: 8px;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+      margin-top: 6px;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #a3e635);
+      width: 0;
+      transition: width 0.4s ease;
+    }
+    .three {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .pill {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: #022c22;
+      color: #bbf7d0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #22c55e;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 999px; background: #22c55e;
+    }
+    ul.list {
+      list-style: none;
+      padding-left: 0;
+      margin: 8px 0 0;
+      font-size: 12px;
+    }
+    .list li { margin-bottom: 6px; }
+    .list li span.move {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .pill-small {
+      font-size: 10px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      padding: 2px 6px;
+      margin-left: 6px;
+      color: #9ca3af;
+    }
+    button {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 13px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 8px;
+      margin-top: 6px;
+    }
+    button.primary {
+      background: linear-gradient(90deg, #22c55e, #4ade80);
+      color: #022c22;
+      font-weight: 600;
+    }
+    button.secondary {
+      background: #020617;
+      border: 1px solid #4b5563;
+      color: #e5e7eb;
+    }
+    textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 12px;
+      padding: 8px;
+      resize: vertical;
+    }
+    .chip {
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px dashed #4b5563;
+      padding: 2px 7px;
+      margin-right: 6px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">PB</div>
+    <div>
+      <h1>PiggyBank • Corporate</h1>
+      <p>NovaVest Embedded • Treasury Intelligence</p>
+    </div>
+  </div>
+  <nav>
+    <a href="#" class="active">Treasury</a>
+    <a href="#">Payments</a>
+    <a href="#">FX &amp; Trade</a>
+    <a href="#">NovaVest Policies</a>
+    <a href="#">Admin</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside>
+    <h3>Overview</h3>
+    <a href="#" class="active">Dashboard</a>
+    <a href="#">Accounts</a>
+    <a href="#">Cash Forecast</a>
+
+    <h3>NovaVest Agent</h3>
+    <a href="#">Policy Engine</a>
+    <a href="#">Sweep Activity</a>
+    <a href="#">Stress Tests</a>
+    <a href="#">Audit Trail</a>
+  </aside>
+
+  <main>
+    <div class="top-row">
+      <div>
+        <div class="badge-company" id="companyName">Contoso Manufacturing Inc.</div>
+        <div class="sub" id="companyMeta">Mid-market • Revenue $450M • Policy: 3 months OPEX in cash-equivalents</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="pill">
+          <span class="status-dot"></span>
+          NovaVest Treasury Agent: ACTIVE
+        </div>
+        <div class="sub" id="policyStatus" style="margin-top:6px;">
+          All policies within limits
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <!-- Left: Cash & sweeps -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="metric-label">Total cash across PiggyBank</div>
+            <div class="metric-value" id="totalCash">$0</div>
+            <div class="metric-sub" id="cashBreakdown">Loading...</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="metric-label">Liquidity buffer vs policy</div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="bufferFill"></div>
+            </div>
+            <div class="metric-sub" id="bufferText"></div>
+          </div>
+        </div>
+
+        <div class="three">
+          <div>
+            <div class="metric-label">Operating accounts</div>
+            <div class="metric-value" id="operatingCash">$0</div>
+            <div class="metric-sub" id="operatingInfo">Loading...</div>
+          </div>
+          <div>
+            <div class="metric-label">Policy-eligible surplus</div>
+            <div class="metric-value" id="surplus">$0</div>
+            <div class="metric-sub">Available for overnight / short-term sweeps</div>
+          </div>
+          <div>
+            <div class="metric-label">Invested via NovaVest</div>
+            <div class="metric-value" id="invested">$0</div>
+            <div class="metric-sub">T-bills, MMFs, short-term IG bonds</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:14px; font-size:14px;">Tonight’s proposed sweeps</h3>
+        <ul class="list" id="sweepsList"></ul>
+
+        <button class="primary" id="btnApproveSweeps">Approve all sweeps</button>
+        <button class="secondary" id="btnRandomizeSweeps">Refresh proposal</button>
+      </section>
+
+      <!-- Right: risk + scenarios -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="metric-label">Risk snapshot</div>
+            <div style="font-size:14px;">Stress &amp; scenarios</div>
+          </div>
+          <span class="pill">
+            <span class="status-dot"></span>
+            Stable • Within limits
+          </span>
+        </div>
+
+        <div class="three">
+          <div>
+            <div class="metric-label">Concentration risk</div>
+            <div class="metric-value" id="concRisk">Low</div>
+            <div class="metric-sub" id="concDetail">Top issuer: 0%</div>
+          </div>
+          <div>
+            <div class="metric-label">+200 bps rate shock</div>
+            <div class="metric-value" id="rateShock">-0.0%</div>
+            <div class="metric-sub">Estimated portfolio impact</div>
+          </div>
+          <div>
+            <div class="metric-label">Policy breaches (30d)</div>
+            <div class="metric-value" id="breaches">0</div>
+            <div class="metric-sub">Last 30 days</div>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;">
+          <span class="chip">Revenue -30% scenario</span>
+          <span class="chip">FX shock</span>
+          <span class="chip">2008-style stress</span>
+        </div>
+
+        <textarea id="scenarioInput" rows="4" placeholder="e.g. 'Simulate 30% revenue drop for 2 quarters and show liquidity coverage.'"></textarea>
+        <button class="primary" id="btnRunScenario">Run scenario</button>
+        <button class="secondary" id="btnDemoScenario">Insert demo scenario</button>
+
+        <div style="margin-top:10px;">
+          <div class="metric-label">Scenario result (AI explanation)</div>
+          <div id="scenarioResult" class="metric-sub" style="margin-top:4px; min-height:40px;">
+            Run a scenario to see how NovaVest summarizes risk and liquidity coverage.
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // --- Dummy "database" for corporate view ---
+  const corpDb = {
+    company: {
+      name: "Contoso Manufacturing Inc.",
+      profile: "Mid-market • Revenue $450M",
+      policy: "3 months OPEX in cash-equivalents"
+    },
+    cash: {
+      total: 42350000,
+      operating: 18400000,
+      next30dObligations: 12700000,
+      invested: 9600000,
+      bufferPct: 78
+    },
+    sweepsTemplates: [
+      [
+        {
+          from: "Main Operating (USD)",
+          to: "30-day T-bill ladder",
+          amount: 2500000,
+          note: "Keeps 110% of 30-day obligations in cash; yield +120 bps vs current."
+        },
+        {
+          from: "EUR Collections",
+          to: "EUR government MMF",
+          amount: 800000,
+          note: "Duration < 7 days; within FX risk limits."
+        }
+      ],
+      [
+        {
+          from: "Reserve Account",
+          to: "90-day T-bills",
+          amount: 3000000,
+          note: "Maintains 3-month buffer while boosting yield."
+        },
+        {
+          from: "Operating (USD)",
+          to: "USD government MMF",
+          amount: 500000,
+          note: "Short-term liquidity with daily access."
+        }
+      ],
+      [
+        {
+          from: "Collections (USD)",
+          to: "30-day IG bond fund",
+          amount: 1500000,
+          note: "Within 20% non-government credit cap."
+        },
+        {
+          from: "FX Buffer (EUR)",
+          to: "EUR government MMF",
+          amount: 600000,
+          note: "Keeps FX buffer but puts idle euros to work."
+        }
+      ]
+    ],
+    risk: {
+      concRisk: "Low",
+      concDetail: "Top issuer exposure: 8.4%",
+      rateShockImpact: "-0.6%",
+      breaches30d: 0
+    }
+  };
+
+  function renderCompany() {
+    const c = corpDb.company;
+    document.getElementById("companyName").textContent = c.name;
+    document.getElementById("companyMeta").textContent = `${c.profile} • Policy: ${c.policy}`;
+  }
+
+  function renderCash() {
+    const c = corpDb.cash;
+    document.getElementById("totalCash").textContent = "$" + c.total.toLocaleString();
+    document.getElementById("cashBreakdown").textContent =
+      "Operating, reserve, and investment accounts in PiggyBank";
+    document.getElementById("operatingCash").textContent = "$" + c.operating.toLocaleString();
+    document.getElementById("operatingInfo").textContent =
+      `Next 30-day obligations: $${c.next30dObligations.toLocaleString()}`;
+    document.getElementById("invested").textContent = "$" + c.invested.toLocaleString();
+    document.getElementById("surplus").textContent = "$" + (c.total - c.next30dObligations - c.invested).toLocaleString();
+
+    document.getElementById("bufferFill").style.width = c.bufferPct + "%";
+    document.getElementById("bufferText").textContent = `${c.bufferPct}% of required buffer secured`;
+  }
+
+  let currentSweepsIndex = 0;
+
+  function renderSweeps() {
+    const list = document.getElementById("sweepsList");
+    list.innerHTML = "";
+    const sweeps = corpDb.sweepsTemplates[currentSweepsIndex];
+    sweeps.forEach(s => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span class="move">
+          <span>Move <strong>$${s.amount.toLocaleString()}</strong> from <strong>${s.from}</strong> to <strong>${s.to}</strong></span>
+          <span class="pill-small">Policy-checked</span>
+        </span>
+        <div class="metric-sub">${s.note}</div>
+      `;
+      list.appendChild(li);
+    });
+  }
+
+  function nextSweepsTemplate() {
+    currentSweepsIndex = (currentSweepsIndex + 1) % corpDb.sweepsTemplates.length;
+    renderSweeps();
+  }
+
+  function renderRisk() {
+    const r = corpDb.risk;
+    document.getElementById("concRisk").textContent = r.concRisk;
+    document.getElementById("concDetail").textContent = r.concDetail;
+    document.getElementById("rateShock").textContent = r.rateShockImpact;
+    document.getElementById("breaches").textContent = r.breaches30d;
+  }
+
+  function runScenario() {
+    const input = document.getElementById("scenarioInput").value.trim();
+    const out = document.getElementById("scenarioResult");
+    if (!input) {
+      out.textContent = "Type a stress scenario first. Example: 'Revenue -30% for 2 quarters'.";
+      return;
+    }
+    out.textContent =
+      "NovaVest would simulate the cash impact, re-apply your 3-month OPEX policy, and propose a mix of " +
+      "de-risking (more T-bills/MMFs) and controlled drawdowns from surplus buckets. " +
+      "For this prototype, assume coverage stays above 1.2x even under this scenario.";
+  }
+
+  function insertDemoScenario() {
+    document.getElementById("scenarioInput").value =
+      "Simulate a 30% revenue drop for 2 quarters and show if our 3-month liquidity buffer holds.";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderCompany();
+    renderCash();
+    renderSweeps();
+    renderRisk();
+
+    document.getElementById("btnRandomizeSweeps").addEventListener("click", nextSweepsTemplate);
+    document.getElementById("btnApproveSweeps").addEventListener("click", () => {
+      alert("In a real deployment, PiggyBank would execute these sweeps. In this prototype, it's just a confirmation.");
+    });
+    document.getElementById("btnRunScenario").addEventListener("click", runScenario);
+    document.getElementById("btnDemoScenario").addEventListener("click", insertDemoScenario);
+  });
+</script>
+</body>
+</html>

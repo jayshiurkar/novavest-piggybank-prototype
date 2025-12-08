@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PiggyBank • NovaVest (Individual)</title>
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; background: #0f172a; color: #e5e7eb; }
+    header {
+      background: linear-gradient(90deg, #4f46e5, #06b6d4);
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 32px; height: 32px;
+      border-radius: 999px;
+      background: #0f172a;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #a5b4fc; font-size: 16px;
+    }
+    header h1 { font-size: 16px; margin: 0; }
+    header p { font-size: 11px; margin: 0; opacity: 0.85; }
+    nav a {
+      color: #e5e7eb;
+      text-decoration: none;
+      font-size: 13px;
+      margin-left: 16px;
+      opacity: 0.85;
+    }
+    nav a.active {
+      font-weight: 600;
+      border-bottom: 2px solid #facc15;
+      padding-bottom: 3px;
+      opacity: 1;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: calc(100vh - 56px);
+    }
+    aside {
+      background: #020617;
+      border-right: 1px solid #1f2937;
+      padding: 18px 14px;
+      font-size: 13px;
+    }
+    aside h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+    aside a {
+      display: block;
+      padding: 7px 9px;
+      border-radius: 6px;
+      color: #9ca3af;
+      text-decoration: none;
+      margin-bottom: 4px;
+    }
+    aside a.active {
+      background: #111827;
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+    main {
+      padding: 18px 22px 26px;
+      background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.15), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.18), transparent 55%),
+                  #020617;
+    }
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 999px; background: #22c55e;
+    }
+    h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .sub {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 2.1fr 1.4fr;
+      gap: 16px;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 14px;
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      padding: 14px 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 10px;
+      gap: 12px;
+    }
+    .metric-label {
+      font-size: 11px;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .metric-value {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .metric-sub {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+    .progress-bar {
+      background: #020617;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #1e293b;
+      height: 8px;
+      margin-top: 6px;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #a3e635);
+      width: 0;
+      transition: width 0.4s ease;
+    }
+    .columns-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .tag {
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      padding: 3px 8px;
+      margin-right: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tags-row { margin-top: 6px; }
+    .tag-dot {
+      width: 7px; height: 7px; border-radius: 999px;
+    }
+    .tag-core { background: #38bdf8; }
+    .tag-bond { background: #22c55e; }
+    .tag-cash { background: #e5e7eb; }
+    .list {
+      list-style: none;
+      padding-left: 0;
+      margin: 8px 0 0;
+      font-size: 12px;
+    }
+    .list li { margin-bottom: 6px; }
+    .pill-small {
+      font-size: 10px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      padding: 2px 6px;
+      margin-left: 6px;
+      color: #9ca3af;
+    }
+    button {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 13px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 8px;
+      margin-top: 6px;
+    }
+    button.primary {
+      background: linear-gradient(90deg, #4ade80, #22c55e);
+      color: #022c22;
+      font-weight: 600;
+    }
+    button.secondary {
+      background: #020617;
+      border: 1px solid #4b5563;
+      color: #e5e7eb;
+    }
+    textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 12px;
+      padding: 8px;
+      resize: vertical;
+    }
+    .chips {
+      margin-top: 6px;
+      font-size: 11px;
+    }
+    .chip {
+      border-radius: 999px;
+      border: 1px dashed #4b5563;
+      padding: 2px 7px;
+      margin-right: 6px;
+      color: #9ca3af;
+    }
+    .user-pill {
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #4b5563;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">PB</div>
+    <div>
+      <h1>PiggyBank</h1>
+      <p>NovaVest Embedded • Individual AI Investing</p>
+    </div>
+  </div>
+  <nav>
+    <a href="#" class="active">Accounts</a>
+    <a href="#">Cards</a>
+    <a href="#">Payments</a>
+    <a href="#">NovaVest</a>
+    <a href="#">Support</a>
+  </nav>
+</header>
+
+<div class="layout">
+  <aside>
+    <h3>Overview</h3>
+    <a href="#" class="active">NovaVest Dashboard</a>
+    <a href="#">Transactions</a>
+    <a href="#">Savings Goals</a>
+
+    <h3>AI Agent</h3>
+    <a href="#">Guardrails</a>
+    <a href="#">Activity Log</a>
+    <a href="#">Settings</a>
+  </aside>
+
+  <main>
+    <div class="top-row">
+      <div>
+        <h2 id="userName">Alex Chen</h2>
+        <div class="sub">
+          Segment: <span id="userSegment">Builder</span> • Risk profile: <span id="userRisk">Balanced</span>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <span class="user-pill">
+          <span class="status-dot"></span>
+          NovaVest Agent: <strong>ON</strong>
+        </span>
+        <div class="sub" style="margin-top:6px;">
+          Next paycheck: <span id="nextPaycheckDate">Dec 15</span> • Est. surplus: <span id="estSurplus">$420</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <!-- Left column: portfolio + suggestion -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="metric-label">Total invested with NovaVest</div>
+            <div class="metric-value" id="investedTotal">$0</div>
+            <div class="metric-sub" id="investedSub">Loading...</div>
+          </div>
+          <div>
+            <div class="metric-label">Goal progress</div>
+            <select id="goalSelector" style="background:#020617; color:#e5e7eb; border-radius:999px; border:1px solid #4b5563; font-size:11px; padding:4px 8px;">
+            </select>
+            <div class="progress-bar">
+              <div class="progress-fill" id="goalProgressFill"></div>
+            </div>
+            <div class="metric-sub" id="goalProgressText"></div>
+          </div>
+        </div>
+
+        <div class="columns-2">
+          <div>
+            <div class="metric-label" style="margin-bottom:4px;">Suggested move today</div>
+            <div id="suggestedMove" style="font-size:14px; margin-bottom:4px;">
+              Loading AI suggestion...
+            </div>
+            <div class="metric-sub" id="riskNote"></div>
+            <button class="primary" id="btnApprove">Approve suggestion</button>
+            <button class="secondary" id="btnRefresh">Refresh suggestion</button>
+          </div>
+          <div>
+            <div class="metric-label" style="margin-bottom:4px;">Asset mix</div>
+            <div class="tags-row">
+              <span class="tag"><span class="tag-dot tag-core"></span>Core stocks ETF</span>
+              <span class="tag"><span class="tag-dot tag-bond"></span>Bonds &amp; T-bills</span>
+              <span class="tag"><span class="tag-dot tag-cash"></span>Cash buffer</span>
+            </div>
+            <ul class="list" id="allocationList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right column: explainability chat -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="metric-label">Ask NovaVest</div>
+            <div style="font-size:14px;">Explain my plan</div>
+          </div>
+          <span class="pill">
+            <span class="status-dot"></span>
+            Explainable AI
+          </span>
+        </div>
+
+        <div class="chips">
+          <span class="chip">Why this amount?</span>
+          <span class="chip">What if I save more?</span>
+          <span class="chip">Crash scenario</span>
+        </div>
+
+        <textarea id="chatInput" rows="4" placeholder="e.g. 'How fast can I reach my emergency fund target if I add $100/month?'"></textarea>
+        <button class="primary" id="btnAsk">Ask</button>
+        <button class="secondary" id="btnDemoQuestion">Insert demo question</button>
+
+        <div style="margin-top:10px;">
+          <div class="metric-label">AI explanation</div>
+          <div id="chatReply" class="metric-sub" style="margin-top:4px; min-height:40px;">
+            Try a sample question to see how NovaVest explains decisions.
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // --- Basic "dummy database" for individual user ---
+  const db = {
+    user: {
+      name: "Alex Chen",
+      segment: "Builder",
+      riskProfile: "Balanced",
+      nextPaycheckDate: "Dec 15",
+      estSurplus: 420
+    },
+    portfolio: {
+      investedTotal: 18450,
+      investedSub: "+ $320 this month • diversified ETF and bond mix",
+      allocations: [
+        { label: "Global equity ETF", amount: 11200, note: "Long-term growth" },
+        { label: "Short-term bond fund", amount: 5600, note: "Lower risk, income" },
+        { label: "Cash buffer in PiggyBank", amount: 1650, note: "Emergency cash" }
+      ]
+    },
+    goals: [
+      { id: "emergency", name: "Emergency Fund", target: 10000, current: 6400 },
+      { id: "house", name: "House Down Payment", target: 25000, current: 7200 },
+      { id: "retirement", name: "Retirement", target: 150000, current: 17850 }
+    ],
+    suggestions: [
+      {
+        text: "Invest $150 into your bond fund and $50 into your global ETF from today's $420 surplus.",
+        riskNote: "Keeps your checking above the $1,200 safety buffer with no leverage or options."
+      },
+      {
+        text: "Move $100 into your emergency fund and $80 into your global ETF. Hold the rest in cash.",
+        riskNote: "Balances short-term safety with long-term growth in your core ETF."
+      },
+      {
+        text: "Add $200 to your emergency fund only. Markets are volatile, so we're prioritizing safety.",
+        riskNote: "This slows growth a bit, but protects your liquidity during volatility spikes."
+      }
+    ]
+  };
+
+  // --- Simple render functions ---
+  function renderUser() {
+    document.getElementById("userName").textContent = db.user.name;
+    document.getElementById("userSegment").textContent = db.user.segment;
+    document.getElementById("userRisk").textContent = db.user.riskProfile;
+    document.getElementById("nextPaycheckDate").textContent = db.user.nextPaycheckDate;
+    document.getElementById("estSurplus").textContent = "$" + db.user.estSurplus;
+  }
+
+  function renderPortfolio() {
+    const p = db.portfolio;
+    document.getElementById("investedTotal").textContent = "$" + p.investedTotal.toLocaleString();
+    document.getElementById("investedSub").textContent = p.investedSub;
+
+    const ul = document.getElementById("allocationList");
+    ul.innerHTML = "";
+    p.allocations.forEach(a => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <div style="display:flex; justify-content:space-between;">
+          <span>${a.label}</span>
+          <span>$${a.amount.toLocaleString()}</span>
+        </div>
+        <div class="metric-sub">${a.note}</div>
+      `;
+      ul.appendChild(li);
+    });
+  }
+
+  function renderGoals() {
+    const select = document.getElementById("goalSelector");
+    select.innerHTML = "";
+    db.goals.forEach(g => {
+      const opt = document.createElement("option");
+      opt.value = g.id;
+      opt.textContent = g.name;
+      select.appendChild(opt);
+    });
+    select.addEventListener("change", () => updateGoal(select.value));
+    updateGoal(db.goals[0].id);
+  }
+
+  function updateGoal(goalId) {
+    const g = db.goals.find(x => x.id === goalId);
+    if (!g) return;
+    const pct = Math.min(100, Math.round((g.current / g.target) * 100));
+    document.getElementById("goalProgressFill").style.width = pct + "%";
+    document.getElementById("goalProgressText").textContent =
+      `${pct}% of $${g.target.toLocaleString()} target • Current: $${g.current.toLocaleString()}`;
+  }
+
+  function randomSuggestion() {
+    const idx = Math.floor(Math.random() * db.suggestions.length);
+    return db.suggestions[idx];
+  }
+
+  function renderSuggestion() {
+    const s = randomSuggestion();
+    document.getElementById("suggestedMove").textContent = s.text;
+    document.getElementById("riskNote").textContent = s.riskNote;
+  }
+
+  // --- Chat demo ---
+  function handleAsk() {
+    const q = document.getElementById("chatInput").value.trim();
+    const reply = document.getElementById("chatReply");
+    if (!q) {
+      reply.textContent = "Type a question first and I'll explain in plain language.";
+      return;
+    }
+    reply.textContent =
+      "Here’s the idea: based on your income, spending, and guardrails, NovaVest keeps your safety buffer intact " +
+      "and routes surplus into a mix of ETFs and bonds. For your question, I would simulate different monthly " +
+      "contribution levels and show how quickly each path reaches your target. In a real app, you'd see that chart here.";
+  }
+
+  function insertDemoQuestion() {
+    document.getElementById("chatInput").value =
+      "If I add $100/month more, how much faster do I reach my emergency fund target?";
+  }
+
+  // --- Wire up events ---
+  document.addEventListener("DOMContentLoaded", () => {
+    renderUser();
+    renderPortfolio();
+    renderGoals();
+    renderSuggestion();
+    document.getElementById("btnRefresh").addEventListener("click", renderSuggestion);
+    document.getElementById("btnApprove").addEventListener("click", () => {
+      alert("In a real app, this would execute the trades inside PiggyBank. For now, it's just a prototype.");
+    });
+    document.getElementById("btnAsk").addEventListener("click", handleAsk);
+    document.getElementById("btnDemoQuestion").addEventListener("click", insertDemoQuestion);
+  });
+</script>
+</body>
+</html>
