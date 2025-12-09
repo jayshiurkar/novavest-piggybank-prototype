@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NovaVest Embedded • PiggyBank Prototype</title>
+  <title>NovaVest • PiggyBank</title>
   <style>
     :root {
+      /* NovaVest Variables (Dark) */
       --bg-app: #0f172a;
       --bg-panel: #1e293b;
       --text-main: #f8fafc;
@@ -15,6 +16,14 @@
       --success: #10b981;
       --border: #334155;
       --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+      /* PiggyBank Variables (Light) */
+      --pb-bg: #f1f5f9;
+      --pb-sidebar: #ffffff;
+      --pb-text: #334155;
+      --pb-border: #e2e8f0;
+      --pb-brand: #ec4899;
+      /* Pink */
     }
 
     * {
@@ -23,24 +32,131 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
+      background-color: var(--pb-bg);
+      /* PiggyBank Light BG */
+      color: var(--pb-text);
+      font-family: var(--font-family);
+      font-size: 14px;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* --- PiggyBank Shell --- */
+    .piggy-sidebar {
+      width: 80px;
+      background: var(--pb-sidebar);
+      border-right: 1px solid var(--pb-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      z-index: 20;
+    }
+
+    .piggy-brand {
+      width: 40px;
+      height: 40px;
+      background: var(--pb-brand);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .piggy-nav-item {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .piggy-nav-item:hover {
+      background: #f8fafc;
+      color: var(--pb-brand);
+    }
+
+    .piggy-nav-item.active {
+      background: #fce7f3;
+      color: var(--pb-brand);
+    }
+
+    .piggy-nav-item svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .piggy-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .piggy-header {
+      height: 60px;
+      background: var(--pb-sidebar);
+      border-bottom: 1px solid var(--pb-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .piggy-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .piggy-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .piggy-avatar {
+      width: 32px;
+      height: 32px;
+      background: #e2e8f0;
+      border-radius: 50%;
+    }
+
+    /* --- NovaVest App Container (Embedded) --- */
+    .app-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
       background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent 70%),
         radial-gradient(circle at bottom, rgba(16, 185, 129, 0.1), transparent 70%),
         var(--bg-app);
       color: var(--text-main);
-      font-family: var(--font-family);
+      margin: 20px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      position: relative;
     }
 
+    /* --- Landing Page Content --- */
     .container {
       width: 100%;
       max-width: 900px;
       padding: 20px;
       text-align: center;
       animation: fadeIn 0.8s ease-out;
+      z-index: 10;
     }
 
     h1 {
@@ -50,6 +166,7 @@
       background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      margin-top: 0;
     }
 
     p.subtitle {
@@ -160,28 +277,66 @@
 
 <body>
 
-  <div class="container">
-    <h1>NovaVest Embedded</h1>
-    <p class="subtitle">
-      Experience the future of AI-driven finance. Seamlessly integrated wealth management for every user segment.
-    </p>
+  <!-- PiggyBank Shell -->
+  <div class="piggy-sidebar">
+    <div class="piggy-brand">PB</div>
+    <div class="piggy-nav-item" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg></div>
+    <div class="piggy-nav-item" title="Accounts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+        <line x1="1" y1="10" x2="23" y2="10"></line>
+      </svg></div>
+    <div class="piggy-nav-item" title="Transfers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <line x1="12" y1="1" x2="12" y2="23"></line>
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+      </svg></div>
+    <div class="piggy-nav-item active" title="NovaVest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <path
+          d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z">
+        </path>
+      </svg></div>
+  </div>
 
-    <div class="grid">
-      <a href="individual.html" class="card">
-        <div class="icon-box">👤</div>
-        <h2>Individual</h2>
-        <p>Personalized investment goals, auto-investing, and AI financial coaching for retail users.</p>
-      </a>
+  <div class="piggy-main">
+    <header class="piggy-header">
+      <div class="piggy-title">PiggyBank Marketplace</div>
+      <div class="piggy-user">
+        <span style="font-size: 13px; font-weight: 500;">Alex Chen</span>
+        <div class="piggy-avatar"></div>
+      </div>
+    </header>
 
-      <a href="corporate.html" class="card">
-        <div class="icon-box">🏢</div>
-        <h2>Corporate</h2>
-        <p>Advanced treasury management, liquidity sweeps, and risk modeling for businesses.</p>
-      </a>
-    </div>
+    <!-- NovaVest App Container -->
+    <div class="app-container">
+      <div class="container">
+        <h1>NovaVest Embedded</h1>
+        <p class="subtitle">
+          Experience the future of AI-driven finance. Seamlessly integrated wealth management for every user segment.
+        </p>
 
-    <div class="footer">
-      NovaVest Prototype • PiggyBank Integration Demo • v2.0
+        <div class="grid">
+          <a href="individual.html" class="card">
+            <div class="icon-box">👤</div>
+            <h2>Individual</h2>
+            <p>Personalized investment goals, auto-investing, and AI financial coaching for retail users.</p>
+          </a>
+
+          <a href="corporate.html" class="card">
+            <div class="icon-box">🏢</div>
+            <h2>Corporate</h2>
+            <p>Advanced treasury management, liquidity sweeps, and risk modeling for businesses.</p>
+          </a>
+        </div>
+
+        <div class="footer">
+          NovaVest Prototype • PiggyBank Integration Demo • v2.0
+        </div>
+      </div>
     </div>
   </div>
 

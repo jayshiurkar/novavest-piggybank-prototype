@@ -7,6 +7,7 @@
   <title>NovaVest • PiggyBank</title>
   <style>
     :root {
+      /* NovaVest Variables (Dark) */
       --bg-app: #0f172a;
       --bg-panel: #1e293b;
       --bg-input: #334155;
@@ -20,6 +21,14 @@
       --border: #334155;
       --radius: 12px;
       --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+      /* PiggyBank Variables (Light) */
+      --pb-bg: #f1f5f9;
+      --pb-sidebar: #ffffff;
+      --pb-text: #334155;
+      --pb-border: #e2e8f0;
+      --pb-brand: #ec4899;
+      /* Pink */
     }
 
     * {
@@ -29,23 +38,119 @@
 
     body {
       margin: 0;
-      background-color: var(--bg-app);
-      color: var(--text-main);
+      background-color: var(--pb-bg);
+      /* PiggyBank Light BG */
+      color: var(--pb-text);
       font-family: var(--font-family);
       font-size: 14px;
       height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* --- PiggyBank Shell --- */
+    .piggy-sidebar {
+      width: 80px;
+      background: var(--pb-sidebar);
+      border-right: 1px solid var(--pb-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      z-index: 20;
+    }
+
+    .piggy-brand {
+      width: 40px;
+      height: 40px;
+      background: var(--pb-brand);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .piggy-nav-item {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .piggy-nav-item:hover {
+      background: #f8fafc;
+      color: var(--pb-brand);
+    }
+
+    .piggy-nav-item.active {
+      background: #fce7f3;
+      color: var(--pb-brand);
+    }
+
+    .piggy-nav-item svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .piggy-main {
+      flex: 1;
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
-    /* --- Layout --- */
-    .app-container {
+    .piggy-header {
+      height: 60px;
+      background: var(--pb-sidebar);
+      border-bottom: 1px solid var(--pb-border);
       display: flex;
-      flex: 1;
-      overflow: hidden;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
     }
 
+    .piggy-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .piggy-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .piggy-avatar {
+      width: 32px;
+      height: 32px;
+      background: #e2e8f0;
+      border-radius: 50%;
+    }
+
+    /* --- NovaVest App Container (Embedded) --- */
+    .app-container {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      background-color: var(--bg-app);
+      /* Dark Theme Restore */
+      color: var(--text-main);
+      margin: 20px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+    }
+
+    /* --- Existing NovaVest Styles --- */
     aside {
       width: 260px;
       background: var(--bg-panel);
@@ -66,7 +171,7 @@
       position: relative;
     }
 
-    /* --- Typography & Common --- */
+    /* Typography & Common */
     h1,
     h2,
     h3,
@@ -116,7 +221,7 @@
       color: var(--warning);
     }
 
-    /* --- Sidebar --- */
+    /* Sidebar */
     .brand {
       font-size: 20px;
       font-weight: 700;
@@ -157,7 +262,7 @@
       color: var(--accent);
     }
 
-    /* --- Header Area --- */
+    /* Header Area */
     .header-bar {
       display: flex;
       justify-content: space-between;
@@ -210,7 +315,7 @@
       transform: translateX(20px);
     }
 
-    /* --- Cards --- */
+    /* Cards */
     .card {
       background: var(--bg-panel);
       border: 1px solid var(--border);
@@ -224,7 +329,7 @@
       gap: 24px;
     }
 
-    /* --- Investment Controls --- */
+    /* Investment Controls */
     .option-tabs {
       display: flex;
       background: var(--bg-input);
@@ -326,7 +431,7 @@
       transition: opacity 0.2s;
     }
 
-    /* --- Forecast Graph --- */
+    /* Forecast Graph */
     .forecast-container {
       height: 180px;
       width: 100%;
@@ -352,7 +457,7 @@
       fill: linear-gradient(180deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0) 100%);
     }
 
-    /* --- Right Panel (Alerts & Emergency) --- */
+    /* Right Panel (Alerts & Emergency) */
     .alert-box {
       background: rgba(239, 68, 68, 0.1);
       border: 1px solid rgba(239, 68, 68, 0.3);
@@ -401,7 +506,7 @@
       color: var(--text-muted);
     }
 
-    /* --- Chat Interface --- */
+    /* Chat Interface */
     .chat-fab {
       position: fixed;
       bottom: 24px;
@@ -513,7 +618,7 @@
       gap: 4px;
     }
 
-    /* --- Animations --- */
+    /* Animations */
     @keyframes pulse {
       0% {
         box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
@@ -536,182 +641,216 @@
 
 <body>
 
-  <div class="app-container">
-    <!-- Sidebar -->
-    <aside>
-      <div class="brand">
-        <div class="brand-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-            <path
-              d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z" />
-          </svg>
-        </div>
-        NovaVest
-      </div>
-      <nav class="nav-links">
-        <a href="#" class="active"><span class="icon">📊</span>Dashboard</a>
-        <a href="#"><span class="icon">👛</span>Wallet</a>
-        <a href="#"><span class="icon">📈</span>Market</a>
-        <a href="#"><span class="icon">👨‍👩‍👧</span>Family & Nominees</a>
-        <a href="#"><span class="icon">⚙️</span>Settings</a>
-      </nav>
-
-      <div style="margin-top: auto;">
-        <div class="emergency-card">
-          <div class="flex-row space-between" style="margin-bottom: 8px;">
-            <span class="text-sm text-muted">Emergency Fund</span>
-            <span class="badge success">Healthy</span>
-          </div>
-          <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">$12,450</div>
-          <button class="btn-sm btn-danger" style="width: 100%;">Quick Withdraw</button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main>
-      <!-- Header -->
-      <div class="header-bar">
-        <div>
-          <h2>Welcome back, Alex</h2>
-          <p class="text-muted text-sm">Here's your financial overview</p>
-        </div>
-        <div class="flex-row">
-          <div class="bank-status">
-            <span class="text-muted text-sm">Bank Balance:</span>
-            <span style="font-weight: 600;">$4,250.00</span>
-          </div>
-          <div class="toggle-container" id="autoToggle" onclick="toggleAutoMode()">
-            <div class="toggle-switch"></div>
-            <span class="text-sm font-weight-600">NovaVest Auto</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Alerts Section -->
-      <div class="alert-box" id="marketAlert">
-        <div class="alert-icon">⚠️</div>
-        <div>
-          <div style="font-weight: 600; font-size: 13px;">Market Volatility Alert</div>
-          <div class="text-sm text-muted" style="margin-top: 2px;">Tech sector is down 2.4% today. NovaVest suggests
-            holding.</div>
-          <div class="flex-row" style="margin-top: 8px;">
-            <button class="btn-sm btn-outline" style="border-color: rgba(239,68,68,0.3); color: #fca5a5;">Analyze
-              Loss</button>
-            <button class="btn-sm btn-outline" style="border-color: rgba(239,68,68,0.3); color: #fca5a5;">View
-              Tips</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <!-- Left: Investment Controls -->
-        <div class="card">
-          <div class="flex-row space-between" style="margin-bottom: 20px;">
-            <h3>Quick Invest</h3>
-            <button class="btn-sm btn-outline">Fresh Insights</button>
-          </div>
-
-          <div class="option-tabs">
-            <div class="option-tab active" onclick="selectTab(this, 'stocks')">Stocks</div>
-            <div class="option-tab" onclick="selectTab(this, 'commodities')">Commodities</div>
-            <div class="option-tab" onclick="selectTab(this, 'other')">Other</div>
-          </div>
-
-          <div id="investContent">
-            <div class="text-muted text-sm" style="margin-bottom: 24px;">
-              Selected: <strong style="color: white;">S&P 500 ETF (VOO)</strong> • Low Risk
-            </div>
-
-            <div class="slider-container">
-              <div class="slider-label">
-                <span class="text-muted">Amount</span>
-                <span style="font-weight: 700; font-size: 16px;" id="amountDisplay">$500</span>
-              </div>
-              <input type="range" min="50" max="2000" step="50" value="500" id="investSlider"
-                oninput="updateAmount(this.value)">
-            </div>
-
-            <div class="slide-action" id="slideTrack">
-              <div class="slide-thumb" id="slideThumb">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </div>
-              <span class="slide-text">Slide to Invest</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Portfolio Forecast -->
-        <div class="card">
-          <div class="flex-row space-between">
-            <h3>Portfolio Forecast</h3>
-            <div class="flex-row">
-              <span class="badge warning" id="modeBadge">MANUAL</span>
-            </div>
-          </div>
-
-          <div class="forecast-container">
-            <svg class="graph-svg" viewBox="0 0 300 100" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style="stop-color:var(--success);stop-opacity:0.2" />
-                  <stop offset="100%" style="stop-color:var(--success);stop-opacity:0" />
-                </linearGradient>
-              </defs>
-              <path d="M0,80 Q50,70 100,50 T300,10" class="graph-area" style="fill: url(#grad); stroke: none;" />
-              <path d="M0,80 Q50,70 100,50 T300,10" class="graph-line" />
-            </svg>
-          </div>
-
-          <div class="flex-row space-between" style="margin-top: 16px;">
-            <div class="text-sm text-muted">Proj. Value (3Y)</div>
-            <div style="font-weight: 700; font-size: 18px;">$48,250</div>
-          </div>
-
-          <div class="flex-row" style="margin-top: 16px; gap: 8px;">
-            <button class="btn-sm btn-outline active" style="flex:1">1Y</button>
-            <button class="btn-sm btn-outline" style="flex:1">3Y</button>
-            <button class="btn-sm btn-outline" style="flex:1">5Y</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Embedded Chat Section -->
-      <div class="card"
-        style="margin-top: auto; padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 200px;">
-        <div class="chat-header-embedded"
-          style="padding: 12px 16px; background: rgba(15, 23, 42, 0.5); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-          <div class="flex-row">
-            <div class="brand-icon" style="width: 24px; height: 24px; font-size: 12px;">NV</div>
-            <span style="font-weight: 600;">NovaVest AI Assistant</span>
-          </div>
-          <span class="badge success">Online</span>
-        </div>
-
-        <div class="chat-body-embedded" id="chatBodyEmbedded"
-          style="flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
-          <div class="msg ai" style="max-width: 100%;">Hello Alex! I'm ready to help you invest. Try saying "Invest $500
-            in Tech".</div>
-        </div>
-
-        <div class="chat-footer-embedded"
-          style="padding: 12px; border-top: 1px solid var(--border); background: var(--bg-panel);">
-          <div class="flex-row">
-            <input type="text" class="chat-input" id="chatInputEmbedded" placeholder="Message NovaVest..."
-              onkeypress="handleEmbeddedChatKey(event)" style="background: var(--bg-app);">
-            <button class="chat-action-btn pulse-btn" onclick="investFromEmbeddedChat()" style="white-space: nowrap;">
-              <span>⚡</span> Quick Invest
-            </button>
-          </div>
-        </div>
-      </div>
-
-    </main>
+  <!-- PiggyBank Shell -->
+  <div class="piggy-sidebar">
+    <div class="piggy-brand">PB</div>
+    <div class="piggy-nav-item" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg></div>
+    <div class="piggy-nav-item" title="Accounts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+        <line x1="1" y1="10" x2="23" y2="10"></line>
+      </svg></div>
+    <div class="piggy-nav-item" title="Transfers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <line x1="12" y1="1" x2="12" y2="23"></line>
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+      </svg></div>
+    <div class="piggy-nav-item active" title="NovaVest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <path
+          d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z">
+        </path>
+      </svg></div>
   </div>
 
+  <div class="piggy-main">
+    <header class="piggy-header">
+      <div class="piggy-title">PiggyBank</div>
+      <div class="piggy-user">
+        <span style="font-size: 13px; font-weight: 500;">Alex Chen</span>
+        <div class="piggy-avatar"></div>
+      </div>
+    </header>
 
+    <!-- NovaVest App Container -->
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside>
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z" />
+            </svg>
+          </div>
+          NovaVest
+        </div>
+        <nav class="nav-links">
+          <a href="#" class="active"><span class="icon">📊</span>Dashboard</a>
+          <a href="#"><span class="icon">👛</span>Wallet</a>
+          <a href="#"><span class="icon">📈</span>Market</a>
+          <a href="#"><span class="icon">👨‍👩‍👧</span>Family & Nominees</a>
+          <a href="#"><span class="icon">⚙️</span>Settings</a>
+        </nav>
+
+        <div style="margin-top: auto;">
+          <div class="emergency-card">
+            <div class="flex-row space-between" style="margin-bottom: 8px;">
+              <span class="text-sm text-muted">Emergency Fund</span>
+              <span class="badge success">Healthy</span>
+            </div>
+            <div style="font-size: 18px; font-weight: 700; margin-bottom: 12px;">$12,450</div>
+            <button class="btn-sm btn-danger" style="width: 100%;">Quick Withdraw</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main>
+        <!-- Header -->
+        <div class="header-bar">
+          <div>
+            <h2>Welcome back, Alex</h2>
+            <p class="text-muted text-sm">Here's your financial overview</p>
+          </div>
+          <div class="flex-row">
+            <div class="bank-status">
+              <span class="text-muted text-sm">Bank Balance:</span>
+              <span style="font-weight: 600;">$4,250.00</span>
+            </div>
+            <div class="toggle-container" id="autoToggle" onclick="toggleAutoMode()">
+              <div class="toggle-switch"></div>
+              <span class="text-sm font-weight-600">NovaVest Auto</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alerts Section -->
+        <div class="alert-box" id="marketAlert">
+          <div class="alert-icon">⚠️</div>
+          <div>
+            <div style="font-weight: 600; font-size: 13px;">Market Volatility Alert</div>
+            <div class="text-sm text-muted" style="margin-top: 2px;">Tech sector is down 2.4% today. NovaVest suggests
+              holding.</div>
+            <div class="flex-row" style="margin-top: 8px;">
+              <button class="btn-sm btn-outline" style="border-color: rgba(239,68,68,0.3); color: #fca5a5;">Analyze
+                Loss</button>
+              <button class="btn-sm btn-outline" style="border-color: rgba(239,68,68,0.3); color: #fca5a5;">View
+                Tips</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Left: Investment Controls -->
+          <div class="card">
+            <div class="flex-row space-between" style="margin-bottom: 20px;">
+              <h3>Quick Invest</h3>
+              <button class="btn-sm btn-outline">Fresh Insights</button>
+            </div>
+
+            <div class="option-tabs">
+              <div class="option-tab active" onclick="selectTab(this, 'stocks')">Stocks</div>
+              <div class="option-tab" onclick="selectTab(this, 'commodities')">Commodities</div>
+              <div class="option-tab" onclick="selectTab(this, 'other')">Other</div>
+            </div>
+
+            <div id="investContent">
+              <div class="text-muted text-sm" style="margin-bottom: 24px;">
+                Selected: <strong style="color: white;">S&P 500 ETF (VOO)</strong> • Low Risk
+              </div>
+
+              <div class="slider-container">
+                <div class="slider-label">
+                  <span class="text-muted">Amount</span>
+                  <span style="font-weight: 700; font-size: 16px;" id="amountDisplay">$500</span>
+                </div>
+                <input type="range" min="50" max="2000" step="50" value="500" id="investSlider"
+                  oninput="updateAmount(this.value)">
+              </div>
+
+              <div class="slide-action" id="slideTrack">
+                <div class="slide-thumb" id="slideThumb">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </div>
+                <span class="slide-text">Slide to Invest</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Portfolio Forecast -->
+          <div class="card">
+            <div class="flex-row space-between">
+              <h3>Portfolio Forecast</h3>
+              <div class="flex-row">
+                <span class="badge warning" id="modeBadge">MANUAL</span>
+              </div>
+            </div>
+
+            <div class="forecast-container">
+              <svg class="graph-svg" viewBox="0 0 300 100" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--success);stop-opacity:0.2" />
+                    <stop offset="100%" style="stop-color:var(--success);stop-opacity:0" />
+                  </linearGradient>
+                </defs>
+                <path d="M0,80 Q50,70 100,50 T300,10" class="graph-area" style="fill: url(#grad); stroke: none;" />
+                <path d="M0,80 Q50,70 100,50 T300,10" class="graph-line" />
+              </svg>
+            </div>
+
+            <div class="flex-row space-between" style="margin-top: 16px;">
+              <div class="text-sm text-muted">Proj. Value (3Y)</div>
+              <div style="font-weight: 700; font-size: 18px;">$48,250</div>
+            </div>
+
+            <div class="flex-row" style="margin-top: 16px; gap: 8px;">
+              <button class="btn-sm btn-outline active" style="flex:1">1Y</button>
+              <button class="btn-sm btn-outline" style="flex:1">3Y</button>
+              <button class="btn-sm btn-outline" style="flex:1">5Y</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Embedded Chat Section -->
+        <div class="card"
+          style="margin-top: auto; padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 200px;">
+          <div class="chat-header-embedded"
+            style="padding: 12px 16px; background: rgba(15, 23, 42, 0.5); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+            <div class="flex-row">
+              <div class="brand-icon" style="width: 24px; height: 24px; font-size: 12px;">NV</div>
+              <span style="font-weight: 600;">NovaVest AI Assistant</span>
+            </div>
+            <span class="badge success">Online</span>
+          </div>
+
+          <div class="chat-body-embedded" id="chatBodyEmbedded"
+            style="flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+            <div class="msg ai" style="max-width: 100%;">Hello Alex! I'm ready to help you invest. Try saying "Invest
+              $500 in Tech".</div>
+          </div>
+
+          <div class="chat-footer-embedded"
+            style="padding: 12px; border-top: 1px solid var(--border); background: var(--bg-panel);">
+            <div class="flex-row">
+              <input type="text" class="chat-input" id="chatInputEmbedded" placeholder="Message NovaVest..."
+                onkeypress="handleEmbeddedChatKey(event)" style="background: var(--bg-app);">
+              <button class="chat-action-btn pulse-btn" onclick="investFromEmbeddedChat()" style="white-space: nowrap;">
+                <span>⚡</span> Quick Invest
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
 
   <script>
     // --- State ---
