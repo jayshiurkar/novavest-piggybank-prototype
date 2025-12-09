@@ -511,73 +511,118 @@
       color: var(--text-muted);
     }
 
-    /* Embedded Chat */
-    .chat-header-embedded {
-      padding: 12px 16px;
-      background: rgba(15, 23, 42, 0.5);
-      border-bottom: 1px solid var(--border);
+    /* --- Gemini-like Chat --- */
+    .chat-card {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      flex: 1;
+      /* Take remaining height */
+      min-height: 350px;
+      /* Ensure visibility */
+      margin-top: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chat-header-embedded {
+      padding: 20px 24px;
+      display: flex;
       align-items: center;
+      gap: 12px;
+    }
+
+    .sparkle-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--success);
     }
 
     .chat-body-embedded {
       flex: 1;
-      padding: 12px;
+      padding: 0 24px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 16px;
+      mask-image: linear-gradient(to bottom, transparent, black 20px, black 90%, transparent);
+      /* Fade edges */
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 20px, black 90%, transparent);
     }
 
     .chat-footer-embedded {
-      padding: 12px;
-      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      background: transparent;
+    }
+
+    .input-group {
+      background: var(--bg-input);
+      border-radius: 99px;
+      padding: 8px 8px 8px 20px;
+      display: flex;
+      align-items: center;
+      border: 1px solid transparent;
+      transition: 0.2s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-group:focus-within {
       background: var(--bg-panel);
+      border-color: var(--success);
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
     }
 
     .chat-input {
-      flex: 1;
-      background: var(--bg-app);
-      border: 1px solid var(--border);
-      border-radius: 99px;
-      padding: 10px 16px;
+      background: transparent;
+      border: none;
       color: white;
+      flex: 1;
+      font-size: 15px;
+      padding: 0;
     }
 
-    .chat-action-btn {
-      background: var(--success);
-      color: #064e3b;
+    .chat-input::placeholder {
+      color: #64748b;
+    }
+
+    .send-btn {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
       border: none;
-      border-radius: 99px;
-      padding: 0 16px;
-      font-weight: 600;
-      font-size: 12px;
+      display: grid;
+      place-items: center;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      color: var(--bg-app);
+      transition: 0.2s;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.05);
     }
 
     .msg {
-      max-width: 100%;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-size: 13px;
-      line-height: 1.4;
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .msg.ai {
-      background: var(--bg-input);
+      background: transparent;
       color: var(--text-main);
-      border-bottom-left-radius: 2px;
+      padding-left: 0;
     }
 
     .msg.user {
-      background: var(--success);
-      color: #064e3b;
+      background: var(--bg-input);
+      color: white;
       align-self: flex-end;
-      border-bottom-right-radius: 2px;
+      border-bottom-right-radius: 4px;
     }
 
     /* Animations */
@@ -784,28 +829,32 @@
           </div>
         </div>
 
-        <!-- Embedded Treasury Assistant -->
-        <div class="card"
-          style="margin-top: auto; padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 200px;">
+        <!-- Gemini-like Treasury Assistant -->
+        <div class="chat-card">
           <div class="chat-header-embedded">
-            <div class="flex-row">
-              <div class="brand-icon" style="width: 24px; height: 24px; font-size: 12px;">NV</div>
-              <span style="font-weight: 600;">NovaVest Treasury Assistant</span>
+            <div class="sparkle-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L9 9l-7 3 7 3 3 7 3-7 7-3-7-3z" />
+              </svg>
             </div>
-            <span class="badge success">Online</span>
+            <span style="font-weight: 600; font-size: 15px;">NovaVest Treasury Assistant</span>
           </div>
 
           <div class="chat-body-embedded" id="chatBodyEmbedded">
-            <div class="msg ai">Good morning. Cash positions are stable. I've identified $2.5M in idle cash across 3
-              accounts. Shall I sweep to the overnight fund?</div>
+            <div class="msg ai">
+              <p style="margin-bottom: 8px;">Good morning. Cash positions are stable.</p>
+              <p class="text-muted text-sm">I've identified $2.5M in idle cash. Shall I sweep to the overnight fund?</p>
+            </div>
           </div>
 
           <div class="chat-footer-embedded">
-            <div class="flex-row">
+            <div class="input-group">
               <input type="text" class="chat-input" id="chatInputEmbedded"
                 placeholder="Ask about cash, risk, or policy..." onkeypress="handleEmbeddedChatKey(event)">
-              <button class="chat-action-btn pulse-btn" onclick="investFromEmbeddedChat()" style="white-space: nowrap;">
-                <span>⚡</span> Run Stress Test
+              <button class="send-btn" onclick="investFromEmbeddedChat()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                </svg>
               </button>
             </div>
           </div>
