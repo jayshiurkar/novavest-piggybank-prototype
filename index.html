@@ -1,82 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NovaVest Embedded • PiggyBank Prototype</title>
   <style>
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    :root {
+      --bg-app: #0f172a;
+      --bg-panel: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #3b82f6;
+      --success: #10b981;
+      --border: #334155;
+      --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at top, rgba(79, 70, 229, 0.25), transparent 60%),
-                  radial-gradient(circle at bottom, rgba(56, 189, 248, 0.25), transparent 60%),
-                  #020617;
-      color: #e5e7eb;
+      background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent 70%),
+        radial-gradient(circle at bottom, rgba(16, 185, 129, 0.1), transparent 70%),
+        var(--bg-app);
+      color: var(--text-main);
+      font-family: var(--font-family);
     }
-    .card {
-      background: rgba(15, 23, 42, 0.96);
-      border-radius: 16px;
-      padding: 24px 26px;
-      max-width: 520px;
-      width: 90%;
-      border: 1px solid #1f2937;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      padding: 20px;
       text-align: center;
+      animation: fadeIn 0.8s ease-out;
     }
+
     h1 {
-      margin-top: 0;
-      font-size: 22px;
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    p {
-      font-size: 13px;
-      color: #9ca3af;
+
+    p.subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
     }
-    .buttons {
-      margin-top: 18px;
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
     }
-    a.btn {
-      display: inline-block;
-      text-decoration: none;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 500;
+
+    .card:hover {
+      transform: translateY(-5px) scale(1.02);
+      background: rgba(30, 41, 59, 0.9);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
-    a.primary {
-      background: linear-gradient(90deg, #4ade80, #22c55e);
-      color: #022c22;
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--success));
+      opacity: 0;
+      transition: opacity 0.3s;
     }
-    a.secondary {
-      background: #020617;
-      border: 1px solid #4b5563;
-      color: #e5e7eb;
+
+    .card:hover::before {
+      opacity: 1;
     }
-    small {
-      display: block;
-      margin-top: 16px;
-      font-size: 11px;
-      color: #6b7280;
+
+    .icon-box {
+      width: 64px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover .icon-box {
+      transform: scale(1.1);
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .card h2 {
+      font-size: 20px;
+      margin: 0 0 8px 0;
+      font-weight: 600;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .footer {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 40px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="card">
-    <h1>NovaVest Embedded Prototype</h1>
-    <p>
-      Demo of NovaVest as an AI financial agent integrated inside the PiggyBank app.<br/>
-      Choose a view to explore:
+
+  <div class="container">
+    <h1>NovaVest Embedded</h1>
+    <p class="subtitle">
+      Experience the future of AI-driven finance. Seamlessly integrated wealth management for every user segment.
     </p>
-    <div class="buttons">
-      <a class="btn primary" href="individual.html">Individual user view</a>
-      <a class="btn secondary" href="corporate.html">Corporate treasury view</a>
+
+    <div class="grid">
+      <a href="individual.html" class="card">
+        <div class="icon-box">👤</div>
+        <h2>Individual</h2>
+        <p>Personalized investment goals, auto-investing, and AI financial coaching for retail users.</p>
+      </a>
+
+      <a href="corporate.html" class="card">
+        <div class="icon-box">🏢</div>
+        <h2>Corporate</h2>
+        <p>Advanced treasury management, liquidity sweeps, and risk modeling for businesses.</p>
+      </a>
     </div>
-    <small>Static prototype • Dummy data only • No real banking or trading</small>
+
+    <div class="footer">
+      NovaVest Prototype • PiggyBank Integration Demo • v2.0
+    </div>
   </div>
+
 </body>
+
 </html>
