@@ -145,6 +145,29 @@
       border-radius: 20px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
       border: 1px solid var(--border);
+      transition: all 0.5s ease;
+    }
+
+    /* --- Auto Mode Visuals (Smart Dynamic) --- */
+    .app-container.auto-active {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+      border-color: #6366f1;
+    }
+
+    .app-container.auto-active aside {
+      background: rgba(30, 27, 75, 0.8);
+      border-right-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .app-container.auto-active .card {
+      background: rgba(30, 27, 75, 0.6);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .app-container.auto-active .slide-thumb {
+      background: #6366f1;
+      box-shadow: 0 0 15px #6366f1;
     }
 
     /* --- Existing NovaVest Styles --- */
@@ -157,6 +180,7 @@
       padding: 20px;
       gap: 24px;
       overflow-y: auto;
+      transition: background 0.5s;
     }
 
     main {
@@ -217,6 +241,11 @@
     .badge.warning {
       background: rgba(245, 158, 11, 0.2);
       color: var(--warning);
+    }
+
+    .badge.auto-badge {
+      background: rgba(99, 102, 241, 0.2);
+      color: #818cf8;
     }
 
     /* Sidebar */
@@ -322,9 +351,10 @@
     }
 
     .toggle-container.active .toggle-switch {
-      background: var(--success);
+      background: #6366f1;
     }
 
+    /* Indigo for Auto */
     .toggle-container.active .toggle-switch::after {
       transform: translateX(20px);
     }
@@ -344,9 +374,10 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
+      transition: background 0.5s, border-color 0.5s;
     }
 
-    /* Suggestions Block (New) */
+    /* Suggestions Block */
     .suggestions-card {
       border-color: var(--accent);
       box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2), 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -711,9 +742,9 @@
   <!-- PiggyBank Shell -->
   <div class="piggy-sidebar">
     <div class="piggy-brand">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-        <path
-          d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 1.5C10.5 3.5 9.26 3 7.5 3A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+      <!-- Bank Icon -->
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+        <path d="M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-4.5-9L2 6v2h19V6l-9.5-5z" />
       </svg>
     </div>
     <div class="piggy-nav-item" title="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -748,7 +779,7 @@
     </header>
 
     <!-- NovaVest App Container -->
-    <div class="app-container">
+    <div class="app-container" id="appContainer">
       <!-- Sidebar -->
       <aside>
         <div class="brand">
@@ -858,7 +889,7 @@
 
             <div id="investContent">
               <div class="text-muted text-sm" style="margin-bottom: 24px;">
-                Selected: <strong style="color: white;">S&P 500 ETF (VOO)</strong> • Low Risk
+                Selected: <strong style="color: white;" id="investTarget">S&P 500 ETF (VOO)</strong>
               </div>
 
               <div class="slider-container">
@@ -881,7 +912,7 @@
             </div>
           </div>
 
-          <!-- Middle: Suggestions / History (NEW) -->
+          <!-- Middle: Suggestions / History -->
           <div class="card suggestions-card">
             <div class="flex-row space-between" style="margin-bottom: 16px;">
               <h3 id="suggestionsTitle">Live Suggestions</h3>
@@ -941,8 +972,8 @@
 
           <div class="chat-body-embedded" id="chatBodyEmbedded">
             <div class="msg ai">
-              <p style="margin-bottom: 8px;">Hello Alex! I'm Novassist, your financial co-pilot.</p>
-              <p class="text-muted text-sm">I've spotted some opportunities in Green Energy. Want to explore?</p>
+              <p style="margin-bottom: 8px;">Hello Alex! I'm Novassist.</p>
+              <p class="text-muted text-sm">You can say "Invest $500 in Tesla" to quick-set your investment.</p>
             </div>
           </div>
 
@@ -995,11 +1026,13 @@
       isAutoMode = !isAutoMode;
       const toggle = document.getElementById('autoToggle');
       const badge = document.getElementById('modeBadge');
+      const container = document.getElementById('appContainer');
 
       if (isAutoMode) {
         toggle.classList.add('active');
-        badge.className = 'badge success';
-        badge.textContent = 'AUTO ENABLED';
+        container.classList.add('auto-active'); // Smart Dynamic Visuals
+        badge.className = 'badge auto-badge';
+        badge.textContent = 'AUTO ACTIVE';
 
         // Update UI for Auto
         document.getElementById('amountDisplay').textContent = 'Auto ($650)';
@@ -1013,6 +1046,7 @@
 
       } else {
         toggle.classList.remove('active');
+        container.classList.remove('auto-active');
         badge.className = 'badge warning';
         badge.textContent = 'MANUAL';
 
@@ -1030,8 +1064,8 @@
 
     function renderSuggestions() {
       const list = document.getElementById('suggestionsList');
-      list.innerHTML = suggestions.map(item => `
-      <div class="suggestion-item" onclick="toggleSelection(this)">
+      list.innerHTML = suggestions.map((item, index) => `
+      <div class="suggestion-item" onclick="toggleSelection(this, '${item.name}')" data-name="${item.name}">
         <div class="flex-row">
           <div class="suggestion-icon">${item.icon}</div>
           <div>
@@ -1063,10 +1097,21 @@
     `).join('');
     }
 
-    function toggleSelection(el) {
-      el.classList.toggle('selected');
+    function toggleSelection(el, name) {
+      // Deselect all others
+      document.querySelectorAll('.suggestion-item').forEach(item => {
+        item.classList.remove('selected');
+        const box = item.querySelector('input[type="checkbox"]');
+        if (box) box.checked = false;
+      });
+
+      // Select clicked
+      el.classList.add('selected');
       const checkbox = el.querySelector('input[type="checkbox"]');
-      if (checkbox) checkbox.checked = !checkbox.checked;
+      if (checkbox) checkbox.checked = true;
+
+      // Sync with Quick Invest
+      document.getElementById('investTarget').textContent = name;
     }
 
     function updateAmount(val) {
@@ -1087,9 +1132,43 @@
         if (text) {
           addEmbeddedMsg(text, 'user');
           input.value = '';
-          setTimeout(() => {
-            addEmbeddedMsg("I've analyzed that request. Executing your investment strategy now.", 'ai');
-          }, 800);
+
+          // Command Parsing Logic
+          const investMatch = text.match(/(?:invest|buy)\s+\$?(\d+)(?:\s+in\s+(.+))?/i);
+
+          if (investMatch) {
+            const amount = investMatch[1];
+            const target = investMatch[2];
+
+            // Update Slider
+            const slider = document.getElementById('investSlider');
+            slider.value = amount;
+            updateAmount(amount);
+
+            let reply = `Set amount to $${amount}.`;
+
+            // Update Target if specified
+            if (target) {
+              document.getElementById('investTarget').textContent = target;
+              reply += ` Target set to ${target}.`;
+
+              // Try to visually select if in list
+              const items = document.querySelectorAll('.suggestion-item');
+              items.forEach(item => {
+                if (item.dataset.name && item.dataset.name.toLowerCase().includes(target.toLowerCase())) {
+                  toggleSelection(item, item.dataset.name);
+                }
+              });
+            }
+
+            reply += " Slide to confirm.";
+            setTimeout(() => addEmbeddedMsg(reply, 'ai'), 600);
+
+          } else {
+            setTimeout(() => {
+              addEmbeddedMsg("I can help you invest. Try saying 'Invest $500 in Tesla'.", 'ai');
+            }, 800);
+          }
         }
       }
     }
@@ -1141,7 +1220,7 @@
         slideThumb.style.background = '#fff';
         document.querySelector('.slide-text').textContent = 'Processing...';
         setTimeout(() => {
-          alert(`Successfully invested $${isAutoMode ? '650 (Auto)' : investmentAmount}!`);
+          alert(`Successfully invested $${isAutoMode ? '650 (Auto)' : investmentAmount} in ${document.getElementById('investTarget').textContent}!`);
           resetSlider();
         }, 500);
       }
